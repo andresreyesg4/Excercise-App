@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cs477.project2_areyes24">
 
-    <uses-permission
-        android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,10 +12,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project2areyes24">
         <activity
+            android:name=".UpdateExercise"
+            android:exported="true" />
+        <activity
+            android:name=".CreateExercise"
+            android:exported="true" />
+        <activity
+            android:name=".EditWorkout"
+            android:exported="true" />
+        <activity
+            android:name=".Workout"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
