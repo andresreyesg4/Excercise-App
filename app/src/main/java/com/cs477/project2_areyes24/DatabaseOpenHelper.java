@@ -2,8 +2,11 @@ package com.cs477.project2_areyes24;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME = "workout_list";
@@ -58,9 +61,33 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         cv.clear();
     }
 
+    public void insertExercise(String name, int reps, int sets, int weight, String notes){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String sql = "SELECT " + COL_NAME + " FROM " + TABLE_NAME + " WHERE " + COL_NAME + " =?";
+        Cursor cursor = database.rawQuery(sql, new String[]{name});
+
+        // check if the exercise is in the database before inserting.
+        if(cursor.getCount() < 0){
+            ContentValues exercise = new ContentValues();
+            exercise.put(COL_NAME, name);
+            exercise.put(COL_REPS, reps);
+            exercise.put(COL_SETS, sets);
+            exercise.put(COL_WEIGHT, weight);
+            exercise.put(COL_NOTES, notes);
+            database.insert(TABLE_NAME, null, exercise);
+        }
+    }
+
+    public Cursor readItems(){
+        String[] colummns = new String[]{"_id", COL_NAME, COL_REPS, COL_SETS, COL_WEIGHT, COL_NOTES};
+        SQLiteDatabase database = this.getWritableDatabase();
+        return database.query(TABLE_NAME, colummns, null, new String[]{}, null, null, null);
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ TABLE_NAME);
+        context.deleteDatabase("workout_list_db");
         onCreate(sqLiteDatabase);
     }
 }

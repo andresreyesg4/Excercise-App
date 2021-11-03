@@ -7,23 +7,31 @@
     tools:context=".Workout">
 
     <TextView
+        android:id="@+id/top_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/top_text"
         android:text="Here are all of your saved exercises. Remove an exercise from this list using a long click. Get excercise details by clicking an excercise."
-        android:textSize="17sp"/>
+        android:textSize="17sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/top_text"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="15dp">
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="15dp"
             android:layout_weight="2"
             android:id="@+id/exercise_list"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/snackbar_text"/>
 
     </LinearLayout>
 
