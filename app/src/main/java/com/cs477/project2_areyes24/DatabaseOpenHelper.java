@@ -37,8 +37,23 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_CMD);
 
         // Load initial values into the database.
-        ContentValues cv = new ContentValues(1);
-        cv.put(COL_NAME, "CS 477 Homework");
+        ContentValues cv = new ContentValues(3);
+        cv.put(COL_NAME, "Sit Ups");
+        cv.put(COL_REPS, 10);
+        cv.put(COL_SETS, 4);
+        cv.put(COL_NOTES, "Good form");
+        sqLiteDatabase.insert(TABLE_NAME, null, cv);
+        cv.clear();
+        cv.put(COL_NAME, "Push Ups");
+        cv.put(COL_REPS, 10);
+        cv.put(COL_SETS, 4);
+        cv.put(COL_NOTES, "Good form");
+        sqLiteDatabase.insert(TABLE_NAME, null, cv);
+        cv.clear();
+        cv.put(COL_NAME, "Pull Ups");
+        cv.put(COL_REPS, 10);
+        cv.put(COL_SETS, 4);
+        cv.put(COL_NOTES, "Good form");
         sqLiteDatabase.insert(TABLE_NAME, null, cv);
         cv.clear();
     }
