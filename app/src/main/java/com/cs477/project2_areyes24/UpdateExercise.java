@@ -19,6 +19,8 @@ public class UpdateExercise extends AppCompatActivity {
     Cursor cursor;
     private int id;
     private String workout;
+    private String n;
+    private int reps_, sets_, weight_;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +50,14 @@ public class UpdateExercise extends AppCompatActivity {
         cursor.moveToPosition(index);
         name.setText(cursor.getString(1));
         workout = cursor.getString(1);
-        reps.setHint(Integer.toString(cursor.getInt(2)));
-        sets.setHint(Integer.toString(cursor.getInt(3)));
-        weight.setHint(Integer.toString(cursor.getInt(4)));
-        notes.setHint(cursor.getString(5));
+        reps_ = cursor.getInt(2);
+        sets_ = cursor.getInt(3);
+        weight_ = cursor.getInt(4);
+        n = cursor.getString(5);
+        reps.setHint(Integer.toString(reps_));
+        sets.setHint(Integer.toString(sets_));
+        weight.setHint(Integer.toString(weight_));
+        notes.setHint(n);
     }
 
     // implement an update button
@@ -59,8 +65,7 @@ public class UpdateExercise extends AppCompatActivity {
         String repetitions = reps.getText().toString();
         String s = sets.getText().toString();
         String w = weight.getText().toString();
-        String n = notes.getText().toString();
-        int reps_ = -1, sets_ = -1 , weight_ = -1;
+        String n_ = notes.getText().toString();
         try {
             if(!repetitions.isEmpty()){
                 reps_ = Integer.parseInt(repetitions);
@@ -70,6 +75,9 @@ public class UpdateExercise extends AppCompatActivity {
             }
             if(!w.isEmpty()) {
                 weight_ = Integer.parseInt(w);
+            }
+            if(!n.isEmpty()){
+                n = n_;
             }
         }catch (NumberFormatException e){
             e.printStackTrace();

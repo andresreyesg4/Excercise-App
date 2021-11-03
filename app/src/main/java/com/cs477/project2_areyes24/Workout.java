@@ -43,8 +43,10 @@ public class Workout extends AppCompatActivity {
                 int sets = cursor.getInt(3);
                 int weight = cursor.getInt(4);
                 String notes = cursor.getString(5);
-                String workout_information = name + ":\nReps: " + reps + " Sets: " + sets + " Weight: " + weight + " Notes: " + notes;
-                Snackbar snackbar = Snackbar.make((findViewById(R.id.snackbar_text).getRootView()), workout_information, BaseTransientBottomBar.LENGTH_SHORT);
+                String workout_information = name + ":\nReps: " + reps + " Sets: " + sets +
+                        " Weight: " + weight + " Notes: " + notes;
+                Snackbar snackbar = Snackbar.make((findViewById(R.id.snackbar_text).getRootView()),
+                        workout_information, BaseTransientBottomBar.LENGTH_SHORT);
                 snackbar.setAnchorView(R.id.snackbar_text);
                 snackbar.show();
             }
@@ -96,8 +98,10 @@ public class Workout extends AppCompatActivity {
         @Override
         protected Cursor doInBackground(String... strings) {
             database = helper.getWritableDatabase();
-            String[] columns = new String[]{"_id", helper.COL_NAME, helper.COL_REPS, helper.COL_SETS, helper.COL_WEIGHT, helper.COL_NOTES};
-            return database.query(helper.TABLE_NAME, columns, null, null, null, null, null);
+            String[] columns = new String[]{"_id", helper.COL_NAME, helper.COL_REPS,
+                    helper.COL_SETS, helper.COL_WEIGHT, helper.COL_NOTES};
+            return database.query(helper.TABLE_NAME, columns, null,
+                    null, null, null, null);
         }
     }
 
