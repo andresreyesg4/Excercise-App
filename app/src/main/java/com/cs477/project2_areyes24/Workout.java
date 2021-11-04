@@ -43,8 +43,19 @@ public class Workout extends AppCompatActivity {
                 int sets = cursor.getInt(3);
                 int weight = cursor.getInt(4);
                 String notes = cursor.getString(5);
-                String workout_information = name + ":\nReps: " + reps + " Sets: " + sets +
-                        " Weight: " + weight + " Notes: " + notes;
+                String workout_information = name + "\n";
+                if(reps > 0){
+                    workout_information += "Reps: " + reps + " ";
+                }
+                if(sets > 0){
+                    workout_information += "Sets: " + sets + " ";
+                }
+                if(weight > 0){
+                    workout_information += "Weight: " + weight + " ";
+                }
+                if(!notes.isEmpty()){
+                    workout_information += "Notes: " + notes + " ";
+                }
                 Snackbar snackbar = Snackbar.make((findViewById(R.id.snackbar_text).getRootView()),
                         workout_information, BaseTransientBottomBar.LENGTH_SHORT);
                 snackbar.setAnchorView(R.id.snackbar_text);
@@ -66,7 +77,7 @@ public class Workout extends AppCompatActivity {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle(message).setIcon(R.drawable.ic_launcher_background)
                 .setMessage("Are you sure you want to do this?")
-                .setNegativeButton("Canel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();

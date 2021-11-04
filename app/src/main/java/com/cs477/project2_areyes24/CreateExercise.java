@@ -9,16 +9,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class CreateExercise extends AppCompatActivity {
-    private EditText name_edit;
-    private EditText reps_edit;
-    private EditText sets_edit;
-    private EditText weight_edit;
-    private EditText notes_edit;
+    private EditText name_edit, reps_edit, sets_edit, weight_edit, notes_edit;
     private String name, reps, sets, weight, notes;
-    Button add_to_workout;
-    Button cancel;
+    private Button add_to_workout, cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,31 +36,34 @@ public class CreateExercise extends AppCompatActivity {
 
     public void onAdd(View view){
         name = name_edit.getText().toString();
-        reps = reps_edit.getText().toString();
-        sets = reps_edit.getText().toString();
-        weight = weight_edit.getText().toString();
-        notes = notes_edit.getText().toString();
-        try {
-            Intent intent = new Intent();
-            if(!name.isEmpty()){
+        if(!name.isEmpty()) {
+            reps = reps_edit.getText().toString();
+            sets = sets_edit.getText().toString();
+            weight = weight_edit.getText().toString();
+            notes = notes_edit.getText().toString();
+            try {
+                Intent intent = new Intent();
                 intent.putExtra("name", name);
+                if (!reps.isEmpty()) {
+                    intent.putExtra("reps", Integer.parseInt(reps));
+                }
+                if (!sets.isEmpty()) {
+                    intent.putExtra("sets", Integer.parseInt(sets));
+                }
+                if (!weight.isEmpty()) {
+                    intent.putExtra("weight", Integer.parseInt(weight));
+                }
+                if (!notes.isEmpty()) {
+                    intent.putExtra("notes", notes);
+                }
+                setResult(EditWorkout.ADDED, intent);
+                finish();
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
             }
-            if(!reps.isEmpty()){
-                intent.putExtra("reps", Integer.parseInt(reps));
-            }
-            if(!sets.isEmpty()){
-                intent.putExtra("sets", Integer.parseInt(sets));
-            }
-            if(!weight.isEmpty()){
-                intent.putExtra("weight", Integer.parseInt(weight));
-            }
-            if(!notes.isEmpty()){
-                intent.putExtra("notes", notes);
-            }
-            setResult(EditWorkout.ADDED, intent);
-            finish();
-        }catch (NumberFormatException e){
-            e.printStackTrace();
+        }else{
+            Toast toast = Toast.makeText(getApplicationContext(), "You forgot to add a name!", Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 

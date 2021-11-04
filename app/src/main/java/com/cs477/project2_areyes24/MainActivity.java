@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
         // initiate the buttons on the screen
         workout = findViewById(R.id.workout);
         edit = findViewById(R.id.edit_mode);
-
         // initiate the database
         workout_db = new DatabaseOpenHelper(this);
     }
@@ -28,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     public void onWorkout(View view){
         // initialize a new activity
         Intent intent = new Intent(this, Workout.class);
-
         //Start the activity
         startActivity(intent);
 
@@ -38,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     public void onEdit(View view){
         // initialize a new activity
         Intent intent = new Intent(this, EditWorkout.class);
-
         //Start the activity
         startActivity(intent);
 

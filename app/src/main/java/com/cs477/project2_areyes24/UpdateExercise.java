@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class UpdateExercise extends AppCompatActivity {
     private Button cancel;
@@ -66,31 +67,46 @@ public class UpdateExercise extends AppCompatActivity {
         String s = sets.getText().toString();
         String w = weight.getText().toString();
         String n_ = notes.getText().toString();
+        int counter = 0;
         try {
             if(!repetitions.isEmpty()){
                 reps_ = Integer.parseInt(repetitions);
+            }else{
+                counter++;
             }
             if(!s.isEmpty()) {
                 sets_ = Integer.parseInt(s);
+            }else{
+                counter++;
             }
             if(!w.isEmpty()) {
                 weight_ = Integer.parseInt(w);
+            }else{
+                counter++;
             }
-            if(!n.isEmpty()){
+            if(!n_.isEmpty()){
                 n = n_;
+            }else{
+                counter++;
             }
         }catch (NumberFormatException e){
             e.printStackTrace();
         }
-        Intent intent = new Intent();
-        intent.putExtra("reps", reps_);
-        intent.putExtra("sets", sets_);
-        intent.putExtra("weight", weight_);
-        intent.putExtra("notes", n);
-        intent.putExtra("name", workout);
-        intent.putExtra("_id", id);
-        setResult(EditWorkout.UPDATED, intent);
-        finish();
+        if(counter < 4) {
+            Intent intent = new Intent();
+            intent.putExtra("reps", reps_);
+            intent.putExtra("sets", sets_);
+            intent.putExtra("weight", weight_);
+            intent.putExtra("notes", n);
+            intent.putExtra("name", workout);
+            intent.putExtra("_id", id);
+            setResult(EditWorkout.UPDATED, intent);
+            finish();
+        }else{
+            Toast toast = Toast.makeText(getApplicationContext(), "No changes made! If you " +
+                    "don't need any changes, click Cancel", Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 
     // implement a return to the previous activity without saving content.
