@@ -53,7 +53,7 @@ public class Workout extends AppCompatActivity {
                 if(weight > 0){
                     workout_information += "Weight: " + weight + " ";
                 }
-                if(!notes.isEmpty()){
+                if(notes != null && !notes.isEmpty()){
                     workout_information += "Notes: " + notes + " ";
                 }
                 Snackbar snackbar = Snackbar.make((findViewById(R.id.snackbar_text).getRootView()),
