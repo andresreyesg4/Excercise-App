@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 public class EditWorkout extends AppCompatActivity {
     Button add;
@@ -46,8 +47,6 @@ public class EditWorkout extends AppCompatActivity {
                 startActivityForResult(intent, UPDATED);
             }
         });
-
-
     }
 
     private final class LoadDB extends AsyncTask<String, Void, Cursor> {
@@ -69,8 +68,11 @@ public class EditWorkout extends AppCompatActivity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Bundle extras = null;
         if(requestCode == UPDATED){
-            Bundle extras = data.getExtras();
+            if(data != null) {
+                extras = data.getExtras();
+            }
             if(extras != null){
                 int reps = extras.getInt("reps");
                 int sets = extras.getInt("sets");
@@ -88,7 +90,37 @@ public class EditWorkout extends AppCompatActivity {
                 adapter.swapCursor(cursor);
             }
         }else if(requestCode == ADDED){
-
+            if(data != null) {
+                extras = data.getExtras();
+            }
+            if(extras != null){
+                String name = extras.getString("name");
+                String notes = extras.getString("notes");
+                int reps = extras.getInt("reps");
+                int sets = extras.getInt("sets");
+                int weight = extras.getInt("weight");
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(helper.COL_REPS, reps);
+                contentValues.put(helper.COL_SETS, sets);
+                contentValues.put(helper.COL_WEIGHT, weight);
+                contentValues.put(helper.COL_NOTES, notes);
+                contentValues.put(helper.COL_NAME, name);
+                // check if the exercise exists already
+                String sql = "SELECT " + helper.COL_NAME + " FROM " + helper.TABLE_NAME
+                        + " WHERE " + helper.COL_NAME + "=?";
+                Cursor temp = database.rawQuery(sql, new String[]{name});
+                if(temp.getCount() > 0){
+                    // we cannot add the workout.
+                    Toast toast = Toast.makeText(getApplicationContext(), "Workout already exists.", Toast.LENGTH_SHORT);
+                    toast.show();
+                }else   {
+                    database.insert(helper.TABLE_NAME, null, contentValues);
+                    Toast toast = Toast.makeText(getApplicationContext(), "New workout added!", Toast.LENGTH_SHORT);
+                    toast.show();
+                    cursor = helper.readItems();
+                    adapter.swapCursor(cursor);
+                }
+            }
         }
     }
 
@@ -102,6 +134,6 @@ public class EditWorkout extends AppCompatActivity {
     public void onAdd(View view){
         // start the new activity
         Intent intent = new Intent(this, CreateExercise.class);
-        startActivity(intent);
+        startActivityForResult(intent, ADDED);
     }
 }
