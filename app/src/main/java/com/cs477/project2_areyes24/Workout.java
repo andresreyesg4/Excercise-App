@@ -73,6 +73,7 @@ public class Workout extends AppCompatActivity {
 
     }
 
+    // called when a long click happens to delete a workout
     public void alertView(String message, int index){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle(message).setIcon(R.drawable.ic_launcher_background)
@@ -97,6 +98,7 @@ public class Workout extends AppCompatActivity {
                 }).show();
     }
 
+    // load the database in the background.
     private final class LoadDB extends AsyncTask<String, Void, Cursor> {
         @Override protected void onPostExecute(Cursor data){
             adapter = new SimpleCursorAdapter(getApplicationContext(), android.R.layout.simple_list_item_1,
@@ -116,12 +118,14 @@ public class Workout extends AppCompatActivity {
         }
     }
 
+    // called on Resume to load the database
     public void onResume(){
         super.onResume();
         LoadDB load = new LoadDB();
         load.execute();
     }
 
+    // Called on pause.
     public void onPause(){
         super.onPause();
         if(database != null) database.close();

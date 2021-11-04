@@ -61,23 +61,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         cv.clear();
     }
 
-    public void insertExercise(String name, int reps, int sets, int weight, String notes){
-        SQLiteDatabase database = this.getWritableDatabase();
-        String sql = "SELECT " + COL_NAME + " FROM " + TABLE_NAME + " WHERE " + COL_NAME + " =?";
-        Cursor cursor = database.rawQuery(sql, new String[]{name});
-
-        // check if the exercise is in the database before inserting.
-        if(cursor.getCount() < 0){
-            ContentValues exercise = new ContentValues();
-            exercise.put(COL_NAME, name);
-            exercise.put(COL_REPS, reps);
-            exercise.put(COL_SETS, sets);
-            exercise.put(COL_WEIGHT, weight);
-            exercise.put(COL_NOTES, notes);
-            database.insert(TABLE_NAME, null, exercise);
-        }
-    }
-
+    // read all the items from the database.
     public Cursor readItems(){
         String[] colummns = new String[]{"_id", COL_NAME, COL_REPS, COL_SETS, COL_WEIGHT, COL_NOTES};
         SQLiteDatabase database = this.getWritableDatabase();

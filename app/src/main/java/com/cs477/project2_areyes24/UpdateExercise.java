@@ -103,6 +103,7 @@ public class UpdateExercise extends AppCompatActivity {
             setResult(EditWorkout.UPDATED, intent);
             finish();
         }else{
+            // when no changes are made.
             Toast toast = Toast.makeText(getApplicationContext(), "No changes made! If you " +
                     "don't need any changes, click Cancel", Toast.LENGTH_LONG);
             toast.show();

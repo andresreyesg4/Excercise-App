@@ -34,6 +34,7 @@ public class CreateExercise extends AppCompatActivity {
         notes_edit = findViewById(R.id.notes);
     }
 
+    // called when add is clicked.
     public void onAdd(View view){
         name = name_edit.getText().toString();
         if(!name.isEmpty()) {
@@ -62,11 +63,13 @@ public class CreateExercise extends AppCompatActivity {
                 e.printStackTrace();
             }
         }else{
+            // make sure to add name  since it is a primary key
             Toast toast = Toast.makeText(getApplicationContext(), "You forgot to add a name!", Toast.LENGTH_SHORT);
             toast.show();
         }
     }
 
+    // called when cancel is clicked.
     public void onCancel(View view){
         finish();
     }
